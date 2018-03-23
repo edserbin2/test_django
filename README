@@ -1,0 +1,23 @@
+# Variables:
+MYSQL_PASS=password
+DB_NAME=test_db
+CONTAINER_NAME=test_sql
+
+# Launch Mysql:
+docker run --name $CONTAINER_NAME -e MYSQL_ROOT_PASSWORD=$MYSQL_PASS -d -p 3306:3306 mysql
+
+# Need some time until mysql starts
+# TO DO in future (--health-cmd) 
+
+# Create database:
+docker exec $CONTAINER_NAME sh -c "echo 'create database $DB_NAME' | mysql -u root -p$MYSQL_PASS"
+
+# Stop and remove container:
+docker rm $(docker stop $CONTAINER_NAME)
+
+
+---------------------------------------------
+# python
+virtualenv -p python3 .env
+source .env/bin/activate
+pip install -r requirements.txt
